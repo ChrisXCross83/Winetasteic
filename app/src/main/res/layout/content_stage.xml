@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_stage"
+    tools:context="de.vogel.winetasteic.winetasteic.StageActivity"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@+id/bottomLayout">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/challengTitle"
+            android:text="Herzlich Willkommen"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="25dip"
+            android:textColor="#74b959" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/challengeSubtitle"
+            android:text="in der Vinothek staatlicher Hofkeller"
+            android:gravity="center"
+            android:textSize="20dip"
+            android:textColor="#74b959" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/challengeImage"
+            android:src="@drawable/staatl_hofkeller_img"
+            android:layout_margin="20dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:id="@+id/btn_challenge"
+            android:text="zur Challenge"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            style="@style/Base.Widget.AppCompat.Button.Colored" />
+        <Button
+            android:id="@+id/btn_pup"
+            android:text="zum Lokal"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            style="@style/Base.Widget.AppCompat.Button.Colored" />
+    </LinearLayout>
+</RelativeLayout>

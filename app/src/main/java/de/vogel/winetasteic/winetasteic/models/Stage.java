@@ -10,6 +10,8 @@ public class Stage {
     private String name;
     private float longitude;
     private float latitude;
+    private Pub pub;
+    private Challenge challenge;
 
     public Stage(String name,  float latitude,float longitude) {
         this.name = name;
@@ -17,6 +19,21 @@ public class Stage {
         this.latitude = latitude;
     }
 
+    public Pub getPub() {
+        return pub;
+    }
+
+    public void setPub(Pub pub) {
+        this.pub = pub;
+    }
+
+    public Challenge getChallenge() {
+        return challenge;
+    }
+
+    public void setChallenge(Challenge challenge) {
+        this.challenge = challenge;
+    }
 
     public String getName() {
         return name;

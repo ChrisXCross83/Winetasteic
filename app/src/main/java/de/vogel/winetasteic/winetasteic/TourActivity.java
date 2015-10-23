@@ -33,6 +33,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.vogel.winetasteic.winetasteic.models.Challenge;
+import de.vogel.winetasteic.winetasteic.models.Pub;
 import de.vogel.winetasteic.winetasteic.models.Stage;
 import fr.quentinklein.slt.LocationTracker;
 
@@ -78,7 +80,9 @@ public class TourActivity extends AppCompatActivity implements OnMapReadyCallbac
         buttonChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(TourActivity.this,ChallengeActivity.class));
+                Intent intent = new Intent(TourActivity.this,StageActivity.class);
+                intent.putExtra("index",index);
+                startActivity(intent);
             }
         });
 
@@ -132,6 +136,12 @@ public class TourActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void init(){
         Stage l1 = new Stage("Till Eulenspiegel",49.7896f,9.9302f);
+        Pub p1 = new Pub(l1.getName());
+        l1.setPub(p1);
+        Challenge c1 = new Challenge("Beschreibung für Eulenspiegel");
+        l1.setChallenge(c1);
+        c1.setChallengeImage(getResources().getDrawable(R.drawable.challenge1));
+
         Stage l2 = new Stage("Maulaffenbäck",49.795662f,9.930387f);
         Stage l3 = new Stage("Staatlicher Hofkeller",49.793836f,9.938459f);
         Stage l4 = new Stage("Alte Mainmühle",49.793313f,9.926961f);
