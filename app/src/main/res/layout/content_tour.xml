@@ -32,6 +32,12 @@
             android:layout_weight="2"
             android:text="TExt 1"/>
         <Button
+            android:id="@+id/btn_challenge"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Challenge"/>
+        <Button
             android:id="@+id/btn_weiter"
             android:layout_width="match_parent"
             android:layout_height="0dp"

@@ -1,6 +1,7 @@
 package de.vogel.winetasteic.winetasteic;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Location;
@@ -42,6 +43,7 @@ public class TourActivity extends AppCompatActivity implements OnMapReadyCallbac
     TextView txtDescription;
     ImageView imageDescription;
     Button buttonNext;
+    Button buttonChallenge;
     LocationTracker mTracker;
     Marker userMarker;
 
@@ -63,13 +65,20 @@ public class TourActivity extends AppCompatActivity implements OnMapReadyCallbac
         txtDescription = (TextView)findViewById(R.id.txtDescription);
         imageDescription = (ImageView)findViewById(R.id.imgLocation);
         buttonNext = (Button)findViewById(R.id.btn_weiter);
-
+        buttonChallenge = (Button)findViewById(R.id.btn_challenge);
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 index++;
                 setMarker();
 
+            }
+        });
+
+        buttonChallenge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TourActivity.this,ChallengeActivity.class));
             }
         });
 
