@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -7,11 +7,45 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_tour" tools:context="de.vogel.winetasteic.winetasteic.TourActivity">
-
-    <com.google.android.gms.maps.MapView
-        android:layout_width="match_parent"
+    tools:showIn="@layout/activity_tour" tools:context="de.vogel.winetasteic.winetasteic.TourActivity"
+    android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:orientation="horizontal"
+    android:layout_weight="1">
+    <ImageView
+        android:id="@+id/imgLocation"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:src="@mipmap/hofkeller" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/txtDescription"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="TExt 1"/>
+        <Button
+            android:id="@+id/btn_weiter"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Weiter"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
+    <com.google.android.gms.maps.MapView
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:id="@+id/map"/>
 
-</RelativeLayout>
+</LinearLayout>
