@@ -2,22 +2,32 @@ package de.vogel.winetasteic.winetasteic;
 
 
 import android.graphics.Color;
+import android.graphics.Point;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,17 +39,42 @@ public class TourActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private GoogleMap mMap;
     MapView mapView;
+    TextView txtDescription;
+    ImageView imageDescription;
+    Button buttonNext;
+    LocationTracker mTracker;
+    Marker userMarker;
+
+    int index = 0;
 
     List<Stage> locationList = new ArrayList<>();
+    LatLng myPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState != null){
+            index = savedInstanceState.getInt("loc",0);
+        }
         setContentView(R.layout.activity_tour);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        txtDescription = (TextView)findViewById(R.id.txtDescription);
+        imageDescription = (ImageView)findViewById(R.id.imgLocation);
+        buttonNext = (Button)findViewById(R.id.btn_weiter);
+
+        buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                index++;
+                setMarker();
+
+            }
+        });
+
         init();
+
 
         mapView = (MapView)findViewById(R.id.map);
         mapView.getMapAsync(this);
@@ -47,23 +82,18 @@ public class TourActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
+    }
+
+    private void trackMe(){
         new LocationTracker(this){
             @Override
             public void onLocationFound(Location location) {
                 LatLng hier = new LatLng(location.getLatitude(),location.getLongitude());
-                if(mMap != null){
-                    mMap.addMarker(new MarkerOptions().position(hier).title("Hier bin ich"));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(hier));
-                }
+                myPosition = hier;
+                userMarker = mMap.addMarker(new MarkerOptions().position(hier).title("Hier bin ich"));
+
+                stopListen();
 
             }
 
@@ -72,8 +102,23 @@ public class TourActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             }
         };
+    }
 
+    private void setMarker(){
+        if (index < locationList.size()  ) {
+            txtDescription.setText(locationList.get(index).getName());
+            Marker marker = mMap.addMarker(new MarkerOptions().position(locationList.get(index).getLatLng()).title(locationList.get(index).getName()));
+            if(myPosition != null){
+                animateMarker(userMarker, myPosition, false);
+                //mMap.addMarker(new MarkerOptions().position(myPosition).title("ICH"));
+            }
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationList.get(index).getLatLng(),17.0f));
+            marker.showInfoWindow();
 
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"Ende erreicht",Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void init(){
@@ -103,17 +148,10 @@ public class TourActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(10.0f ) );
-        PolylineOptions  lineoptions = new PolylineOptions();
-        for (Stage stage:locationList) {
-            mMap.addMarker(new MarkerOptions().position(stage.getLatLng()).title(stage.getName()));
-            lineoptions.add(stage.getLatLng());
-        }
-        lineoptions.width(5);
-        lineoptions.color(Color.RED);
 
-        mMap.addPolyline(lineoptions);
+        setMarker();
+        trackMe();
+
 
     }
 
@@ -138,6 +176,7 @@ public class TourActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("loc",index);
         mapView.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
@@ -146,5 +185,42 @@ public class TourActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onLowMemory() {
         mapView.onLowMemory();
         super.onLowMemory();
+    }
+
+    public void animateMarker(final Marker marker, final LatLng toPosition,
+                              final boolean hideMarker) {
+        final Handler handler = new Handler();
+        final long start = SystemClock.uptimeMillis();
+        Projection proj = mMap.getProjection();
+        Point startPoint = proj.toScreenLocation(marker.getPosition());
+        final LatLng startLatLng = proj.fromScreenLocation(startPoint);
+        final long duration = 500;
+
+        final Interpolator interpolator = new LinearInterpolator();
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                long elapsed = SystemClock.uptimeMillis() - start;
+                float t = interpolator.getInterpolation((float) elapsed
+                        / duration);
+                double lng = t * toPosition.longitude + (1 - t)
+                        * startLatLng.longitude;
+                double lat = t * toPosition.latitude + (1 - t)
+                        * startLatLng.latitude;
+                marker.setPosition(new LatLng(lat, lng));
+
+                if (t < 1.0) {
+                    // Post again 16ms later.
+                    handler.postDelayed(this, 16);
+                } else {
+                    if (hideMarker) {
+                        marker.setVisible(false);
+                    } else {
+                        marker.setVisible(true);
+                    }
+                }
+            }
+        });
     }
 }
