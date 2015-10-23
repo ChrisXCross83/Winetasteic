@@ -18,7 +18,7 @@ public class ChallengeActivity extends AppCompatActivity implements ScreenSlideF
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 5;
+    private static final int NUM_PAGES = 3;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -36,8 +36,8 @@ public class ChallengeActivity extends AppCompatActivity implements ScreenSlideF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+       // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -47,14 +47,7 @@ public class ChallengeActivity extends AppCompatActivity implements ScreenSlideF
     }
     @Override
     public void onBackPressed() {
-        if (mPager.getCurrentItem() == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.
-            super.onBackPressed();
-        } else {
-            // Otherwise, select the previous step.
-            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-        }
+         super.onBackPressed();
     }
 
     @Override
@@ -73,7 +66,7 @@ public class ChallengeActivity extends AppCompatActivity implements ScreenSlideF
 
         @Override
         public Fragment getItem(int position) {
-            return  ScreenSlideFragment.newInstance("test","test");
+            return  ScreenSlideFragment.newInstance(position,"test");
         }
 
         @Override

@@ -1,6 +1,7 @@
 package de.vogel.winetasteic.winetasteic;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 
 /**
@@ -21,11 +23,11 @@ import android.view.ViewGroup;
 public class ScreenSlideFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM1 = "index";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private int index;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
@@ -39,10 +41,10 @@ public class ScreenSlideFragment extends Fragment {
      * @return A new instance of fragment ScreenSlideFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ScreenSlideFragment newInstance(String param1, String param2) {
+    public static ScreenSlideFragment newInstance(int param1, String param2) {
         ScreenSlideFragment fragment = new ScreenSlideFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        args.putInt(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
@@ -56,7 +58,7 @@ public class ScreenSlideFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            index = getArguments().getInt(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -65,7 +67,20 @@ public class ScreenSlideFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_screen_slide, container, false);
+        View view =  inflater.inflate(R.layout.fragment_screen_slide, container, false);
+        ImageView imageView = (ImageView)view.findViewById(R.id.challengNo);
+        Drawable header = null;
+        if(index == 0){
+            header = getActivity().getResources().getDrawable(R.drawable.halbkreis1);
+        }else if (index == 1){
+            header = getActivity().getResources().getDrawable(R.drawable.halbkreis2);
+        }else if (index == 2){
+            header = getActivity().getResources().getDrawable(R.drawable.halbkreis3);
+        }else{
+            header = getActivity().getResources().getDrawable(R.drawable.halbkreis3);
+        }
+        imageView.setImageDrawable(header);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

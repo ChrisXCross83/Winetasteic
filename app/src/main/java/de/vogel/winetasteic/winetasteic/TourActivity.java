@@ -59,8 +59,8 @@ public class TourActivity extends AppCompatActivity implements OnMapReadyCallbac
             index = savedInstanceState.getInt("loc",0);
         }
         setContentView(R.layout.activity_tour);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+       // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+      //  setSupportActionBar(toolbar);
 
         txtDescription = (TextView)findViewById(R.id.txtDescription);
         imageDescription = (ImageView)findViewById(R.id.imgLocation);
