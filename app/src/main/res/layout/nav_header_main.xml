@@ -9,9 +9,9 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark" android:orientation="vertical"
     android:gravity="bottom">
 
-    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+    <ImageView android:layout_width="100dp" android:layout_height="73dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@mipmap/wt_navi_bar" android:id="@+id/imageView" />
+        android:src="@drawable/startscreen_logo_800x930px_white" android:id="@+id/imageView" />
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing" android:text="Hackathon Studio"
