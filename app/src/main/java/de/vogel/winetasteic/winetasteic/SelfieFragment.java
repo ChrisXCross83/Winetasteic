@@ -1,28 +1,29 @@
 package de.vogel.winetasteic.winetasteic;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.VideoView;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ChallengeSuccessFragment.OnFragmentInteractionListener} interface
+ * {@link SelfieFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ChallengeSuccessFragment#newInstance} factory method to
+ * Use the {@link SelfieFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChallengeSuccessFragment extends Fragment {
+public class SelfieFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "index";
@@ -31,8 +32,11 @@ public class ChallengeSuccessFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private int index;
     private String mParam2;
-    VideoView videoView;
+
+    ImageView imageSelfie;
+    Button buttonSelfie;
     Button buttonDone;
+    Button buttonSkip;
 
     private OnFragmentInteractionListener mListener;
 
@@ -42,11 +46,11 @@ public class ChallengeSuccessFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ChallengeFragment.
+     * @return A new instance of fragment SelfieFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChallengeSuccessFragment newInstance(int param1, String param2) {
-        ChallengeSuccessFragment fragment = new ChallengeSuccessFragment();
+    public static SelfieFragment newInstance(int param1, String param2) {
+        SelfieFragment fragment = new SelfieFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -54,7 +58,7 @@ public class ChallengeSuccessFragment extends Fragment {
         return fragment;
     }
 
-    public ChallengeSuccessFragment() {
+    public SelfieFragment() {
         // Required empty public constructor
     }
 
@@ -71,45 +75,48 @@ public class ChallengeSuccessFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_challenge_success, container, false);
-        buttonDone =(Button)view.findViewById(R.id.btn_done);
+        View view =  inflater.inflate(R.layout.fragment_selfie, container, false);
+
+        imageSelfie = (ImageView)view.findViewById(R.id.selfie);
+        buttonSelfie = (Button)view.findViewById(R.id.btn_selfie);
+        buttonSelfie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchTakePictureIntent();
+            }
+        });
+
+        buttonSkip = (Button)view.findViewById(R.id.btn_skip);
+
+        buttonSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.finishChallenge();
+            }
+        });
+        buttonDone = (Button)view.findViewById(R.id.btn_done);
         buttonDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mParam2 == "1"){
-                    mListener.switchPage();
-                }else {
-                    mListener.finishChallenge();
-                }
-
+                mListener.switchPage();
             }
         });
-        videoView = (VideoView)view.findViewById(R.id.videoView);
-        String uriPath = "";
-        if(mParam2 == "1"){
-             uriPath = "android.resource://"+getActivity().getPackageName()+"/" +R.raw.my;
-        }else{
-             uriPath = "android.resource://"+getActivity().getPackageName()+"/" +R.raw.my2;
-        }
-
-        Uri uri = Uri.parse(uriPath);
-        videoView.setVideoURI(uri);
-        videoView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                videoView.start();
-                return true;
-            }
-        });
-        videoView.seekTo(100);
-       // videoView.start();
         return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.finishChallenge();
+
+        }
+    }
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
@@ -141,8 +148,17 @@ public class ChallengeSuccessFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-       public void finishChallenge();
+
         public void switchPage();
+        public void finishChallenge();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageSelfie.setImageBitmap(imageBitmap);
+        }
+    }
 }

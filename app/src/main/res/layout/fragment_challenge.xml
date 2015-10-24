@@ -1,14 +1,62 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="de.vogel.winetasteic.winetasteic.ChallengeFragment"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    android:background="@android:color/white">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
         android:id="@+id/challengNo"
         android:src="@drawable/halbkreis1"
-        android:layout_marginTop="-55dp" />
-</LinearLayout>
+        android:scaleType="fitXY" />
+    <TextView
+        android:layout_below="@+id/challengNo"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" android:id="@+id/textTopdescription"
+        android:text="Bestell dir einen Schoppen"
+        android:gravity="center"
+        android:textSize="20dip"
+        android:textColor="#74b959"
+        />
+
+    <TextView
+        android:layout_below="@+id/textTopdescription"
+        android:layout_width="match_parent"
+        android:layout_height="80dp" android:id="@+id/textSubdescription"
+        android:text="2014 Würzburger Stein Grauburgunder feinfruchtig, frisch, markant "
+        android:gravity="center"
+        android:textSize="20dip"
+        android:textColor="#74b959"/>
+
+    <ImageView
+        android:id="@+id/imageProst"
+        android:layout_below="@+id/textSubdescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/prost"/>
+    <LinearLayout
+        android:layout_below="@+id/imageProst"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom">
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:id="@+id/btn_done"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:text="Erledigt"/>
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:id="@+id/btn_skip"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:text="Überspringen"/>
+    </LinearLayout>
+</RelativeLayout>

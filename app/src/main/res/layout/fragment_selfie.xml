@@ -6,25 +6,27 @@
     android:background="@android:color/white">
 
 
-    <ImageView
+    <Button
         android:layout_width="wrap_content"
-        android:layout_height="180dp"
-        android:id="@+id/challengNo"
-        android:src="@drawable/badge"
+        android:layout_height="80dp"
+        android:id="@+id/btn_selfie"
+
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:text="Mache Selfie"/>
 
-    <VideoView
+    <ImageView
         android:layout_width="300dp"
         android:layout_height="200dp"
-        android:id="@+id/videoView"
-        android:layout_below="@+id/challengNo"
+        android:id="@+id/selfie"
+        android:layout_below="@+id/btn_selfie"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:layout_centerInParent="true" />
     <LinearLayout
-        android:layout_below="@+id/videoView"
+        android:layout_below="@+id/selfie"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal"
