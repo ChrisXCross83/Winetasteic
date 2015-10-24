@@ -38,7 +38,7 @@
             android:layout_height="80dp"
             android:id="@+id/btn_done"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:text="Weiter"/>
+            android:text="Erledigt"/>
         <Button
             android:layout_weight="1"
             android:layout_width="0dp"

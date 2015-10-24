@@ -55,8 +55,9 @@ public class ChallengeActivity extends AppCompatActivity implements ChallengeFra
 
     @Override
     public void switchPage() {
-        index++;
+
         if(index < 4){
+            index++;
             mPager.setCurrentItem(index);
         }
 
@@ -88,14 +89,15 @@ public class ChallengeActivity extends AppCompatActivity implements ChallengeFra
             }else if(position == 2){
                 return SelfieFragment.newInstance(id,"lkskd");
             }else{
-                return ChallengeSuccessFragment.newInstance(id,"2");}
+                return ChallengeSuccessFragment.newInstance(id,"2");
+            }
 
 
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
     }
 
