@@ -9,7 +9,9 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-feature android:name="android.hardware.camera"
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
 
     <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
@@ -54,15 +56,23 @@
             android:name=".ChallengeActivity"
             android:label="@string/title_activity_challenge"
             android:launchMode="singleTop"
+            android:parentActivityName=".StageActivity"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
             android:name=".StageActivity"
             android:label="@string/title_activity_stage"
             android:launchMode="singleTop"
+            android:parentActivityName=".TourActivity"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-
+        <activity
+            android:name=".PubActivity"
+            android:label="@string/title_activity_pub"
+            android:launchMode="singleTop"
+            android:parentActivityName=".StageActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

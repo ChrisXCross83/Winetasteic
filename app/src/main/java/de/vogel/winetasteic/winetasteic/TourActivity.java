@@ -120,6 +120,25 @@ public class TourActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void setMarker(){
         if (index < locationList.size()  ) {
             txtDescription.setText(locationList.get(index).getName());
+
+            switch (index){
+                case 0:
+                    imageDescription.setImageDrawable(getResources().getDrawable(R.drawable.bierkeller));
+                    break;
+                case 1:
+                    imageDescription.setImageDrawable(getResources().getDrawable(R.drawable.restaurant_maulauffenbaeck_1));
+                    break;
+                case 2:
+                    imageDescription.setImageDrawable(getResources().getDrawable(R.drawable.hofkeller));
+                    break;
+                case 3:
+                    imageDescription.setImageDrawable(getResources().getDrawable(R.drawable.alte_mainmuehle_logo250));
+                    break;
+                case 4:
+                    imageDescription.setImageDrawable(getResources().getDrawable(R.drawable.juspi));
+                    break;
+
+            }
             Marker marker = mMap.addMarker(new MarkerOptions().position(locationList.get(index).getLatLng()).title(locationList.get(index).getName()));
             if(myPosition != null){
                 animateMarker(userMarker, myPosition, false);
@@ -131,6 +150,13 @@ public class TourActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         else{
             Toast.makeText(getApplicationContext(),"Ende erreicht",Toast.LENGTH_SHORT).show();
+            buttonNext.setText("Ende");
+            buttonNext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
         }
     }
 
