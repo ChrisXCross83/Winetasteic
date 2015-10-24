@@ -47,7 +47,8 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="80dp"
-            style="@style/Base.Widget.AppCompat.Button.Colored" />
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            />
         <Button
             android:id="@+id/btn_pup"
             android:text="zum Lokal"
