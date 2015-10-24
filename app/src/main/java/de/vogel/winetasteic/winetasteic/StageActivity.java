@@ -1,5 +1,6 @@
 package de.vogel.winetasteic.winetasteic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -46,7 +47,10 @@ public class StageActivity extends AppCompatActivity {
         buttonChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //START Challeng
+                Intent intent = new Intent(StageActivity.this,ChallengeActivity.class);
+                intent.putExtra("index",id);
+                startActivity(intent);
+                //START Challenge
             }
         });
 
