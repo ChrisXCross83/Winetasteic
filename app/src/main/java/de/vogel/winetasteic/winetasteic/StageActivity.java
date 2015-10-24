@@ -40,7 +40,9 @@ public class StageActivity extends AppCompatActivity {
         buttonPub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //START PUB INFO mit INDEX
+                Intent intent = new Intent(StageActivity.this,PubActivity.class);
+                intent.putExtra("index",id);
+                startActivity(intent);
             }
         });
         buttonChallenge = (Button)findViewById(R.id.btn_challenge);

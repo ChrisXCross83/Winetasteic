@@ -1,14 +1,48 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="de.vogel.winetasteic.winetasteic.ChallengeFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@android:color/white">
 
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="180dp"
         android:id="@+id/challengNo"
-        android:src="@drawable/prost"
-         />
-</LinearLayout>
+        android:src="@drawable/badge"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true" />
+
+    <VideoView
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:id="@+id/videoView"
+        android:layout_below="@+id/challengNo"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_centerInParent="true" />
+    <LinearLayout
+        android:layout_below="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom">
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:id="@+id/btn_done"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:text="Weiter"/>
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:id="@+id/btn_skip"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:text="Überspringen"/>
+    </LinearLayout>
+</RelativeLayout>

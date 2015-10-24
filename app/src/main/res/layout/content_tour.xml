@@ -19,7 +19,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:src="@mipmap/hofkeller" />
+        android:src="@drawable/staatl_hofkeller_img" />
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -30,7 +30,11 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:text="TExt 1"/>
+            android:text="TExt 1"
+            android:gravity="center"
+            android:textColor="#74b959"
+            android:textSize="20dip"
+            android:textStyle="bold" />
         <Button
             android:id="@+id/btn_challenge"
             android:layout_width="match_parent"

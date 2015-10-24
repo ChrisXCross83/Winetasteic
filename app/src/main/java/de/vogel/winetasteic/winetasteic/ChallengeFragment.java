@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 
@@ -29,6 +30,9 @@ public class ChallengeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private int index;
     private String mParam2;
+
+    Button buttonDone;
+    Button buttonSkip;
 
     private OnFragmentInteractionListener mListener;
 
@@ -70,16 +74,27 @@ public class ChallengeFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_challenge, container, false);
         ImageView imageView = (ImageView)view.findViewById(R.id.challengNo);
         Drawable header = null;
-        if(index == 0){
-            header = getActivity().getResources().getDrawable(R.drawable.halbkreis1);
-        }else if (index == 1){
-            header = getActivity().getResources().getDrawable(R.drawable.halbkreis2);
-        }else if (index == 2){
-            header = getActivity().getResources().getDrawable(R.drawable.halbkreis3);
-        }else{
-            header = getActivity().getResources().getDrawable(R.drawable.halbkreis3);
-        }
+
+        header = getActivity().getResources().getDrawable(R.drawable.halbkreis1);
+
         imageView.setImageDrawable(header);
+
+        buttonSkip = (Button)view.findViewById(R.id.btn_skip);
+
+        buttonSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.finishChallenge();
+            }
+        });
+        buttonDone = (Button)view.findViewById(R.id.btn_done);
+        buttonDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.switchPage();
+            }
+        });
+
         return view;
     }
 
@@ -120,6 +135,7 @@ public class ChallengeFragment extends Fragment {
     public interface OnFragmentInteractionListener {
 
         public void switchPage();
+        public void finishChallenge();
     }
 
 }

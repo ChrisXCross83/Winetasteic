@@ -6,9 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.VideoView;
 
 
 /**
@@ -28,6 +31,8 @@ public class ChallengeSuccessFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private int index;
     private String mParam2;
+    VideoView videoView;
+    Button buttonDone;
 
     private OnFragmentInteractionListener mListener;
 
@@ -66,19 +71,38 @@ public class ChallengeSuccessFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_challenge, container, false);
-        ImageView imageView = (ImageView)view.findViewById(R.id.challengNo);
-        Drawable header = null;
-        if(index == 0){
-            header = getActivity().getResources().getDrawable(R.drawable.halbkreis1);
-        }else if (index == 1){
-            header = getActivity().getResources().getDrawable(R.drawable.halbkreis2);
-        }else if (index == 2){
-            header = getActivity().getResources().getDrawable(R.drawable.halbkreis3);
+        View view =  inflater.inflate(R.layout.fragment_challenge_success, container, false);
+        buttonDone =(Button)view.findViewById(R.id.btn_done);
+        buttonDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mParam2 == "1"){
+                    mListener.switchPage();
+                }else {
+                    mListener.finishChallenge();
+                }
+
+            }
+        });
+        videoView = (VideoView)view.findViewById(R.id.videoView);
+        String uriPath = "";
+        if(mParam2 == "1"){
+             uriPath = "android.resource://"+getActivity().getPackageName()+"/" +R.raw.my;
         }else{
-            header = getActivity().getResources().getDrawable(R.drawable.halbkreis3);
+             uriPath = "android.resource://"+getActivity().getPackageName()+"/" +R.raw.my2;
         }
-        imageView.setImageDrawable(header);
+
+        Uri uri = Uri.parse(uriPath);
+        videoView.setVideoURI(uri);
+        videoView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                videoView.start();
+                return true;
+            }
+        });
+        videoView.seekTo(100);
+       // videoView.start();
         return view;
     }
 
@@ -118,6 +142,7 @@ public class ChallengeSuccessFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
        public void finishChallenge();
+        public void switchPage();
     }
 
 }
