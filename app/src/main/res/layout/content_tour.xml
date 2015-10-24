@@ -36,13 +36,15 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Challenge"/>
+            android:text="Challenge"
+            style="@style/Base.Widget.AppCompat.Button.Colored"/>
         <Button
             android:id="@+id/btn_weiter"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Weiter"/>
+            android:text="Weiter"
+            style="@style/Base.Widget.AppCompat.Button.Colored"/>
 
     </LinearLayout>
 
