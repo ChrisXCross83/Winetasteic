@@ -48,7 +48,8 @@
         <activity
             android:name=".ChallengeActivity"
             android:label="@string/title_activity_challenge"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop">
         </activity>
         <activity
             android:name=".StageActivity"
